@@ -166,6 +166,12 @@ const actions = (api) => {
               relData = [relData]
             }
             for (let entry of relData) {
+              // See: https://jsonapi.org/format/#document-resource-object-linkage
+              // skip empty or null values for empty to-one relationship
+              if (!entry) {
+                continue
+              }
+              
               // Rewrite 'data' objects to normalised form
               if (!(typeof entry === 'string')) {
                 entry = { [jvtag]: entry }
